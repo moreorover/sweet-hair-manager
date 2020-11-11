@@ -6,7 +6,9 @@ import supabase from '@/plugins/supabase'
 
 supabase.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_OUT' && session === null) {
-    router.push({ name: 'Home' })
+    store.dispatch('user/signOut').then(() => {
+      router.push({ name: 'Home' })
+    })
   }
 })
 

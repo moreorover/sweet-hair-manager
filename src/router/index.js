@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import supabase from '@/plugins/supabase'
+import store from '@/store'
 
 const routes = [
   {
@@ -38,6 +39,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if (!store.getters['user/user'] || !store.getters['user/session']) {
+    if (supabase.auth.session() && supabase.auth.user()) {
+      store.dispatch('user/setUser', supabase.auth.user())
+      store.dispatch('user/setSession', supabase.auth.session())
+    }
+  }
+
   if (
     to.matched.some(record => record.meta.requiresAuth) &&
     !supabase.auth.session()
