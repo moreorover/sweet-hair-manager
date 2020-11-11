@@ -1,6 +1,4 @@
-<template>
-  Home
-</template>
+<template><div></div></template>
 
 <script>
 export default {
