@@ -19,18 +19,7 @@
       </nav>
     </div>
   </section>
-  <div>
-    <Suspense>
-      <template #default>
-        <div>
-          <router-view />
-        </div>
-      </template>
-      <template #fallback>
-        Loading...
-      </template>
-    </Suspense>
-  </div>
+  <router-view />
 </template>
 
 <script>

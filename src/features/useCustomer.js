@@ -2,9 +2,10 @@ import { ref } from 'vue'
 import supabase from '@/plugins/supabase'
 import router from '@/router'
 
-export default function useCustomer() {
-  const firstName = ref('')
-  const lastName = ref('')
+export default function useCustomer(id, firstName, lastName) {
+  const customerId = id
+  const fName = ref(firstName)
+  const lName = ref(lastName)
   const error = ref('')
 
   const customers = ref([])
@@ -21,8 +22,8 @@ export default function useCustomer() {
       .from('customers')
       .insert([
         {
-          firstName: firstName.value,
-          lastName: lastName.value,
+          firstName: fName.value,
+          lastName: lName.value,
         },
       ])
       .then(res => {
@@ -32,12 +33,35 @@ export default function useCustomer() {
       })
   }
 
+  function updateCustomer() {
+    supabase
+      .from('customers')
+      .update({ firstName: firstName, lastName: lastName })
+      .match({ id: customerId })
+      .then(res => {
+        console.log(res)
+        if (res.data) {
+          router.push({ name: 'Customers' })
+        }
+      })
+  }
+
+  function onFormSubmit() {
+    if (id) {
+      console.log('update')
+      updateCustomer()
+    } else {
+      console.log('save')
+      saveCustomer()
+    }
+  }
+
   return {
-    firstName,
-    lastName,
+    firstName: fName,
+    lastName: lName,
     error,
     customers,
-    saveCustomer,
     fetchCustomers,
+    onFormSubmit,
   }
 }

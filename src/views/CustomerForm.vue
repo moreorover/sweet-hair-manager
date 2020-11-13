@@ -2,7 +2,7 @@
   <div class="card has-text-centered">
     <div class="column">
       <h3 class="title has-text-black">Create Customer</h3>
-      <form @submit.prevent="saveCustomer">
+      <form @submit.prevent="onFormSubmit">
         <BaseInput v-model="firstName" label="First Name" type="text" />
         <BaseInput v-model="lastName" label="Last Name" type="text" />
         <BaseButton
@@ -15,8 +15,7 @@
       </form>
     </div>
   </div>
-  {{ firstName }}
-  {{ lastName }}
+  ID: {{ id }}
 </template>
 
 <script>
@@ -30,10 +29,38 @@ export default {
     BaseInput,
     BaseButton,
   },
-  setup() {
-    const { firstName, lastName, error, saveCustomer } = useCustomer()
+  props: {
+    id: {
+      type: String,
+      required: false,
+      default() {
+        return null
+      },
+    },
+    fName: {
+      type: String,
+      required: false,
+      default() {
+        return ''
+      },
+    },
+    lName: {
+      type: String,
+      required: false,
+      default() {
+        return ''
+      },
+    },
+  },
+  setup(props) {
+    const { firstName, lastName, error, onFormSubmit } = useCustomer(
+      props.id,
+      props.fName,
+      props.lName
+    )
+    console.log(props)
 
-    return { firstName, lastName, error, saveCustomer }
+    return { firstName, lastName, error, onFormSubmit }
   },
 }
 </script>

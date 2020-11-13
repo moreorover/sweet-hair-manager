@@ -50,7 +50,14 @@ const routes = [
       {
         path: 'add',
         name: 'Add Customer',
-        component: () => import('@/views/AddCustomer'),
+        props: true,
+        component: () => import('@/views/CustomerForm'),
+      },
+      {
+        path: ':id/edit',
+        name: 'Edit Customer',
+        props: true,
+        component: () => import('@/views/CustomerForm'),
       },
     ],
   },
