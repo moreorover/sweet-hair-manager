@@ -1,10 +1,11 @@
 <template>
-  <h1>Very secret dashboard page</h1>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: 'Dashboard',
+  name: 'CustomerForm',
+  setup() {},
 }
 </script>
 

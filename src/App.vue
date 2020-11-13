@@ -1,98 +1,91 @@
 <template>
-  <!--  <div id="nav">-->
-  <!--    <router-link to="/">Home</router-link> |-->
-  <!--    <router-link to="/about">About</router-link> |-->
-  <!--    <router-link to="/dashboard">Dashboard</router-link>-->
-  <!--  </div>-->
-  <nav class="navbar is-white">
-    <div class="container">
-      <div class="navbar-brand">
-        <router-link class="navbar-item brand-text" :to="{ name: 'Home' }">
-          Sweet Hair
-        </router-link>
-        <div
-          class="navbar-burger burger"
-          data-target="navMenu"
-          onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+  <Navigation />
+  <div class="container ">
+    <div class="columns">
+      <div class="column is-3">
+        <SideNavigation />
       </div>
-      <div id="navMenu" class="navbar-menu">
-        <div class="navbar-start">
-          <router-link class="navbar-item" :to="{ name: 'Home' }">
-            Home
-          </router-link>
-          <router-link class="navbar-item" :to="{ name: 'Dashboard' }">
-            Dashboard
-          </router-link>
-          <router-link class="navbar-item" to="/">
-            Payments
-          </router-link>
-          <router-link class="navbar-item" to="/">
-            Exceptions
-          </router-link>
-          <router-link class="navbar-item" to="/">
-            Reports
-          </router-link>
-        </div>
-        <div class="navbar-end" v-if="user">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <router-link class="button is-small" to="/profile">
-                  <span class="icon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                  <span>
-                    {{ user.email }}
-                  </span>
-                </router-link>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="navbar-end" v-else>
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <router-link class="button is-small" :to="{ name: 'Sign Up' }">
-                  <span class="icon">
-                    <i class="fa fa-user-plus"></i>
-                  </span>
-                  <span>
-                    Register
-                  </span>
-                </router-link>
-              </p>
-              <p class="control">
-                <router-link
-                  class="button is-small is-info is-outlined"
-                  :to="{ name: 'Sign In' }"
-                >
-                  <span class="icon">
-                    <i class="fa fa-user"></i>
-                  </span>
-                  <span>Login</span>
-                </router-link>
-              </p>
-            </div>
-          </div>
-        </div>
+      <div class="column is-9">
+        <router-view />
       </div>
     </div>
-  </nav>
-  <router-view />
+  </div>
 </template>
 <script>
+import Navigation from '@/components/main/Navigation'
+import SideNavigation from '@/components/main/SideNavigation'
 export default {
-  computed: {
-    user() {
-      return this.$store.getters['user/user']
-    },
-  },
+  components: { SideNavigation, Navigation },
 }
 </script>
-<style></style>
+<style>
+html,
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  height: 100%;
+  background: #ecf0f3;
+}
+nav.navbar {
+  border-top: 4px solid #276cda;
+  margin-bottom: 1rem;
+}
+.navbar-item.brand-text {
+  font-weight: 300;
+}
+.navbar-item,
+.navbar-link {
+  font-size: 14px;
+  font-weight: 700;
+}
+.columns {
+  width: 100%;
+  height: 100%;
+  margin-left: 0;
+}
+.menu-label {
+  color: #8f99a3;
+  letter-spacing: 1.3;
+  font-weight: 700;
+}
+.menu-list a {
+  color: #0f1d38;
+  font-size: 14px;
+  font-weight: 700;
+}
+.menu-list a:hover {
+  background-color: transparent;
+  color: #276cda;
+}
+.menu-list a.is-active {
+  background-color: transparent;
+  color: #276cda;
+  font-weight: 700;
+}
+.card {
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.18);
+  margin-bottom: 2rem;
+}
+.card-header-title {
+  color: #8f99a3;
+  font-weight: 400;
+}
+.info-tiles {
+  margin: 1rem 0;
+}
+.info-tiles .subtitle {
+  font-weight: 300;
+  color: #8f99a3;
+}
+.hero.welcome.is-info {
+  background: #36d1dc;
+  background: -webkit-linear-gradient(to right, #5b86e5, #36d1dc);
+  background: linear-gradient(to right, #5b86e5, #36d1dc);
+}
+.hero.welcome .title,
+.hero.welcome .subtitle {
+  color: hsl(192, 17%, 99%);
+}
+</style>

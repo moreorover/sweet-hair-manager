@@ -30,6 +30,30 @@ const routes = [
     component: () => import('@/views/Dashboard'),
     meta: { requiresAuth: true },
   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/Profile'),
+    meta: { requiresAuth: true },
+  },
+  {
+    path: '/customers',
+    name: 'Cust',
+    component: () => import('@/views/Customers'),
+    meta: { requiresAuth: true },
+    children: [
+      {
+        path: '',
+        name: 'Customers',
+        component: () => import('@/views/AllCustomers'),
+      },
+      {
+        path: 'add',
+        name: 'Add Customer',
+        component: () => import('@/views/AddCustomer'),
+      },
+    ],
+  },
 ]
 
 const router = createRouter({
