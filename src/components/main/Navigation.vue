@@ -41,9 +41,7 @@
                   <span class="icon">
                     <i class="fa fa-user"></i>
                   </span>
-                  <span>
-                    {{ user.email }}
-                  </span>
+                  <span> {{ user.firstName }} {{ user.lastName }} </span>
                 </router-link>
               </p>
               <p class="control">
@@ -91,16 +89,21 @@
 <script>
 import { useStore } from 'vuex'
 import { computed } from 'vue'
-import useSupabaseAuth from '@/plugins/supabaseAuth'
+import useFirebaseAuth from '@/plugins/firebaseAuth'
 
 export default {
   name: 'Navigation',
   setup() {
     const store = useStore()
-    const { signOut } = useSupabaseAuth()
+    const { signOut } = useFirebaseAuth()
+
+    let user = computed(() => store.state.user.user)
+
+    let show = computed(() => user.value !== null)
 
     return {
-      user: computed(() => store.state.user.user),
+      show,
+      user,
       signOut,
     }
   },

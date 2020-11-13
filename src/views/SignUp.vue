@@ -8,8 +8,22 @@
           <p class="subtitle has-text-black">Please sign up to proceed.</p>
           <div class="box">
             <form @submit.prevent="signUp">
-              <BaseInput v-model="email" label="Email" type="email" />
-              <BaseInput v-model="password" label="Password" type="password" />
+              <BaseInput
+                v-model="user.firstName"
+                label="First Name"
+                type="text"
+              />
+              <BaseInput
+                v-model="user.lastName"
+                label="Last Name"
+                type="text"
+              />
+              <BaseInput v-model="user.email" label="Email" type="email" />
+              <BaseInput
+                v-model="user.password"
+                label="Password"
+                type="password"
+              />
               <BaseButton
                 class="button is-block is-info is-large is-fullwidth"
                 type="submit"
@@ -32,14 +46,14 @@
 <script>
 import BaseInput from '@/components/BaseInput'
 import BaseButton from '@/components/BaseButton'
-import useSupabaseAuth from '@/plugins/supabaseAuth'
+import useFirebaseAuth from '@/plugins/firebaseAuth'
 export default {
   name: 'SignUp',
   components: { BaseButton, BaseInput },
   setup() {
-    const { email, password, error, signUp } = useSupabaseAuth()
+    const { user, error, signUp } = useFirebaseAuth()
 
-    return { email, password, error, signUp }
+    return { user, error, signUp }
   },
 }
 </script>

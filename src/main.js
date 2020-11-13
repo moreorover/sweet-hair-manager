@@ -2,17 +2,19 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import supabase from '@/plugins/supabase'
+import { auth } from '@/plugins/firebase'
 
-supabase.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_OUT' && session === null) {
-    store.dispatch('user/signOut').then(() => {
-      router.push({ name: 'Home' })
-    })
+let app
+
+auth.onAuthStateChanged(user => {
+  if (!app) {
+    app = createApp(App)
+      .use(store)
+      .use(router)
+      .mount('#app')
+  }
+
+  if (user) {
+    store.dispatch('user/fetchUserProfile', user)
   }
 })
-
-createApp(App)
-  .use(store)
-  .use(router)
-  .mount('#app')

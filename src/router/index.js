@@ -1,13 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
-import supabase from '@/plugins/supabase'
-import store from '@/store'
+import { auth } from '@/plugins/firebase'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home,
+    component: () => import('../views/Home.vue'),
   },
   {
     path: '/about',
@@ -70,19 +68,13 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (!store.getters['user/user'] || !store.getters['user/session']) {
-    if (supabase.auth.session() && supabase.auth.user()) {
-      store.dispatch('user/setUser', supabase.auth.user())
-      store.dispatch('user/setSession', supabase.auth.session())
-    }
-  }
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
 
-  if (
-    to.matched.some(record => record.meta.requiresAuth) &&
-    !supabase.auth.session()
-  )
+  if (requiresAuth && !auth.currentUser) {
     next({ name: 'Sign In' })
-  else next()
+  } else {
+    next()
+  }
 })
 
 export default router
