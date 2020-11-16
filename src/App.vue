@@ -1,22 +1,8 @@
 <template>
-  <Navigation />
-  <div class="container ">
-    <div class="columns">
-      <div class="column is-3">
-        <SideNavigation />
-      </div>
-      <div class="column is-9">
-        <router-view />
-      </div>
-    </div>
-  </div>
+  <router-view />
 </template>
 <script>
-import Navigation from '@/components/main/Navigation'
-import SideNavigation from '@/components/main/SideNavigation'
-export default {
-  components: { SideNavigation, Navigation },
-}
+export default {}
 </script>
 <style>
 html,
